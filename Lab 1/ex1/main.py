@@ -1,3 +1,7 @@
+'''
+incearca sa validezi input ul sa ai numere la input. dar da, in rest ar fi bine
+'''
+
 def calculate_gcd(x, y):
 
     while y:
