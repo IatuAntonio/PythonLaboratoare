@@ -1,3 +1,7 @@
+'''
+e ok, dar ai putea doar sa folosesti count si sa te uiti dupa 1
+'''
+
 def counter(number):
     cnt = 0
     for i in range(len(number)):
