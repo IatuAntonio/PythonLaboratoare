@@ -1,3 +1,7 @@
+'''
+e muncitoreasca metoda, dar e in regula. ceva mai interesant ai putea face cu manipulari de string uri, maybe vezi ceva in curs si ai putea rezulva in 1,2,3 linii
+'''
+
 def palindrom(number):
     aux = number
     num1 = number % 10

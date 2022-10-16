@@ -1,3 +1,7 @@
+'''
+poti sa salvezi cifrele ca si caractere intr-un string si apoi sa castezi direct la int string ul respectiv.
+'''
+
 def extract_numbers(text):
     ok = 0
     number = 0

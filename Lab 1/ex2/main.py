@@ -1,3 +1,7 @@
+'''
+e in regula, ai putea in loc de functie sa faci direct verificarea.
+'''
+
 def vowel(chr):
     return chr in ['A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u']
 

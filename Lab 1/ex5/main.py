@@ -1,3 +1,7 @@
+'''
+ar fi bine daca ai reusi sa faci sa mearga pe mai multe dimensiuni, nu doar fixa de 4.
+'''
+
 array = []
 
 for i in range(4):
