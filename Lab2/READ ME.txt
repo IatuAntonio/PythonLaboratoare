@@ -1,0 +1,1 @@
+In prima parte am citit de la tastatura un numar random de liste/tuple/numere si le-am transmis in functie printr-o lista sau matrice. In a doua parte am rezolvat problemele mai mult cu parametri variabili in functii. Daca ceva nu este in regula la prima parte am sa modific.
