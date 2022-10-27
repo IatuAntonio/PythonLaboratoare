@@ -1,3 +1,8 @@
+'''
+aici puteai sa adaugi toate numerele care sunt palindroame intr-o lista si sa aplici max() si len() peste lista
+'''
+
+
 def palindrome_function(numbers):
     cnt = 0
     maxim = -1
