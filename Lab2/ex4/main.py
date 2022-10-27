@@ -1,6 +1,9 @@
 from colorama import Fore
 
-
+'''
+aici ai putea pe viitor sa observi ca e lista circulara si sa te folosesti de '%' pentru pozitii
+in cazul in care 'sare' de lungime
+'''
 def my_song(musical_notes, moves, start):
     new_order = [musical_notes[start]]
     for i in moves:
