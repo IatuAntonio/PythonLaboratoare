@@ -10,6 +10,7 @@ def file_extension(my_path):
         fe = split_tup[-1]
         my_extensions.append(fe)
 
+    my_extensions.sort()
     print(my_extensions)
 
 
