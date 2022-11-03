@@ -1,3 +1,6 @@
+'''
+puteai sa faci si cu sort dupa elementul de pe poz [1][2]
+'''
 def ord_tuples(*arguments):
     my_list = []
     for arg in arguments:

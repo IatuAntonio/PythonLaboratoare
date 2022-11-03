@@ -1,3 +1,7 @@
+'''
+aici dupa ce padezi listele la aceasi lungime cu None, ai putea sa vezi cum poti folosi zip()
+'''
+
 def take_elements(*arguments):
     new_list = []
     maxim = -1
