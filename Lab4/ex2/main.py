@@ -7,7 +7,8 @@ def fill_file(directory, file):
     my_files = []
     for file in os.listdir():
         my_files.append(os.path.abspath(file))
-        fd.write(os.path.abspath(file) + "\n")
+        if file[0] == "A":
+            fd.write(os.path.abspath(file) + "\n")
 
     # print(my_files)
     fd.close()

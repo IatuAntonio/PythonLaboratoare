@@ -1,3 +1,2 @@
-D:\Multe chestii\Antonio\Facultate\Python\PythonLaboratoare\Lab4\ex1\myFolder\anunturi.txt
-D:\Multe chestii\Antonio\Facultate\Python\PythonLaboratoare\Lab4\ex1\myFolder\Screenshot_28.png
-D:\Multe chestii\Antonio\Facultate\Python\PythonLaboratoare\Lab4\ex1\myFolder\tema_ml.tex
+D:\Multe chestii\Antonio\Facultate\Python\PythonLaboratoare\Lab4\ex1\myFolder\Anca.txt
+D:\Multe chestii\Antonio\Facultate\Python\PythonLaboratoare\Lab4\ex1\myFolder\Andreea.txt
