@@ -8,7 +8,8 @@ def file_extension(my_path):
         # print(file)
         split_tup = os.path.splitext(file)
         fe = split_tup[-1]
-        my_extensions.append(fe)
+        if fe != '':
+            my_extensions.append(fe)
 
     my_extensions.sort()
     print(my_extensions)
