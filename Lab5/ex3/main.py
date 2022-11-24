@@ -8,7 +8,7 @@ def vowels(var):
 def main():
     text = "antonio ceva unde"
 
-    print(list(filter(lambda x: x[0] in "aeiou", text)))
+    print(list(filter(lambda x: x in "aeiou", text)))
 
     filtru = filter(vowels, text)
     print(list(filtru))
