@@ -4,7 +4,6 @@ import re
 def my_fnc(text, reg_text):
     my_list = []
     for element in text:
-        print(element)
         ceva = re.findall(reg_text, element)
         my_list.append(ceva)
 
