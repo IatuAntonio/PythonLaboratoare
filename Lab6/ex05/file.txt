@@ -1,0 +1,38 @@
+<note>
+	<to>Tove</to>
+	<from>Jani</from>
+	<heading>Reminder</heading>
+	<body>Don't forget me this weekend!</body>
+</note>
+<PLANT data-id="oplanta1" class="planta" url="planta.ro">
+	<COMMON>Bloodroot</COMMON>
+	<BOTANICAL>Sanguinaria canadensis</BOTANICAL>
+	<ZONE>4</ZONE>
+	<LIGHT>Mostly Shady</LIGHT>
+	<PRICE>$2.44</PRICE>
+	<AVAILABILITY>031599</AVAILABILITY>
+</PLANT>
+<PLANT data-id="oplanta2" class="planta" url="planta.ro/planta">
+	<COMMON>Bloodroot</COMMON>
+	<BOTANICAL>Sanguinaria canadensis</BOTANICAL>
+	<ZONE>4</ZONE>
+	<LIGHT>Mostly Shady</LIGHT>
+	<PRICE>$2.44</PRICE>
+	<AVAILABILITY>031599</AVAILABILITY>
+</PLANT>
+<CD class="uncd" url="google.com" name="cd">
+	<TITLE>Hide your heart</TITLE>
+	<ARTIST>Bonnie Tyler</ARTIST>
+	<COUNTRY>UK</COUNTRY>
+	<COMPANY>CBS Records</COMPANY>
+	<PRICE>9.90</PRICE>
+	<YEAR>1988</YEAR>
+</CD>
+<CD class="uncd" url="google.com" name="cd">
+	<TITLE>Eros</TITLE>
+	<ARTIST>Eros Ramazzotti</ARTIST>
+	<COUNTRY>EU</COUNTRY>
+	<COMPANY>BMG</COMPANY>
+	<PRICE>9.90</PRICE>
+	<YEAR>1997</YEAR>
+</CD>
