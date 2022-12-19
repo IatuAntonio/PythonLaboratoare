@@ -13,12 +13,12 @@ blue = (0, 0, 255)
 screen = pygame.display.set_mode((screen_x, screen_y))
 
 # background menu
-background_menu = pygame.image.load("D:\\Multe chestii\\Antonio\\Facultate\\Python\\proiect\\TrapTheMouse\\images\\background-menu01.png").convert()
+background_menu = pygame.image.load("./images/background-menu01.png").convert()
 
 
 def main_menu():
 
-    font = pygame.font.Font('indie-flower.ttf', 32)
+    font = pygame.font.Font('freesansbold.ttf', 32)
     text = font.render("TrapTheMouse", True, green)
 
     textrect = text.get_rect()
