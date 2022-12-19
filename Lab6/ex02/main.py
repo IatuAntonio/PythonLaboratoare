@@ -9,7 +9,7 @@ def my_function(txt_reg, text, number):
 
 
 def main():
-    my_function(r"\w", "ana 345 fdf f sd 342 fsd 934", 3)
+    my_function(r"\w", "anaana 345 fdf f sd 342 fsd 934", 3)
 
 
 if __name__ == "__main__":
