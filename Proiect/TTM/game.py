@@ -86,31 +86,33 @@ def pressButton(event):
                     print(index)
                     # moveMouse()
                     nr_player = 1
-                    ngh1 = myNeighbours(mouse_position)
+                    ngh1 = myNeighboursValid(mouse_position)
 
-                    if you_lose == 1:
-                        print("You lost")
+                    if len(ngh1) == 0:
+                        print("PLAYER WIN")
                         sys.exit()
-
-                    if len(ngh1) != 6:
-                        you_lose = 1
         else:
             ngh = myNeighboursValid(mouse_position)
 
             for index in range(0, len(ngh)):
-                hexagon = coord[index]
+                vecin = ngh[index]
+                hexagon = coord[vecin]
                 hexagon_mouse = coord[mouse_position]
 
-                if verifyHexagon(event.x, event.y, hexagon) == 1 and mouse_position != index:
+                if verifyHexagon(event.x, event.y, hexagon) == 1 and mouse_position != vecin:
+
                     canvas.create_polygon(hexagon_mouse[0][0], hexagon_mouse[0][1], hexagon_mouse[1][0], hexagon_mouse[1][1], hexagon_mouse[2][0],
                                           hexagon_mouse[2][1],
                                           hexagon_mouse[3][0], hexagon_mouse[3][1], hexagon_mouse[4][0], hexagon_mouse[4][1], hexagon_mouse[5][0],
                                           hexagon_mouse[5][1],
                                           fill="darkorange", outline="darkviolet")
-                    mouse_position = index
+                    mouse_position = vecin
                     canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW,
                                 image=mouse)
                     nr_player = 0
+                    if len(myNeighbours(mouse_position)) != 6:
+                        print("MOUSE WIN")
+                        sys.exit()
 
 
 def coordError(x1, x2):
@@ -393,7 +395,7 @@ board.title("TRAP THE MOUSE")
 
 board.geometry("1120x850")
 
-canvas = Canvas(board, width=1120, height=850, bg="lightseagreen")
+canvas = Canvas(board, width=1120, height=850, bg="saddlebrown")
 
 canvas.bind("<Button-1>", pressButton)
 
