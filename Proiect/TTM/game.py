@@ -4,6 +4,13 @@ from PIL import Image, ImageTk
 import random
 
 
+def forWin(text):
+    canvas.destroy()
+    win_game = Canvas(board, width=1120, height=850, bg="saddlebrown")
+    win_game.pack(padx=10, pady=10)
+    win_game.create_text(560, 100, text=text, fill="darkorange", font=("Brush Script MT", 60))
+
+
 def defineTraps():
     global mouse_position
     my_list = list(range(4, 9))
@@ -61,13 +68,14 @@ def pressButton(event):
                                       hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0],
                                       hexagon[5][1],
                                       fill="crimson", outline="darkviolet")
-                print(index)
+                # print(index)
                 moveMouse()
                 ngh1 = myNeighbours(mouse_position)
 
                 if you_lose == 1:
-                    print("You lost")
-                    sys.exit()
+                    forWin("You lost")
+                    # print("You lost")
+                    # sys.exit()
 
                 if len(ngh1) != 6:
                     you_lose = 1
@@ -83,14 +91,15 @@ def pressButton(event):
                                           hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0],
                                           hexagon[5][1],
                                           fill="crimson", outline="darkviolet")
-                    print(index)
+                    # print(index)
                     # moveMouse()
                     nr_player = 1
                     ngh1 = myNeighboursValid(mouse_position)
 
                     if len(ngh1) == 0:
-                        print("PLAYER WIN")
-                        sys.exit()
+                        forWin("Player Win")
+                        # print("PLAYER WIN")
+                        # sys.exit()
         else:
             ngh = myNeighboursValid(mouse_position)
 
@@ -111,8 +120,9 @@ def pressButton(event):
                                 image=mouse)
                     nr_player = 0
                     if len(myNeighbours(mouse_position)) != 6:
-                        print("MOUSE WIN")
-                        sys.exit()
+                        forWin("Mouse Win")
+                        # print("MOUSE WIN")
+                        # sys.exit()
 
 
 def coordError(x1, x2):
@@ -185,8 +195,10 @@ def moveEasy():
     neighbours = myNeighboursValid(mouse_position)
 
     if len(neighbours) == 0:
-        print("You win")
-        sys.exit()
+        forWin("You Win")
+        return 0
+        # print("You win")
+        # sys.exit()
 
     canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0], hexagon[2][1],
                           hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0], hexagon[5][1],
@@ -205,8 +217,10 @@ def moveMedium():
     neighbours = myNeighboursValid(mouse_position)
 
     if len(neighbours) == 0:
-        print("You win")
-        sys.exit()
+        forWin("You Win")
+        return 0
+        # print("You win")
+        # sys.exit()
 
     if medium_rnd_go == 0:
 
@@ -330,8 +344,10 @@ def moveHard():
     neighbours = myNeighboursValid(mouse_position)
 
     if len(neighbours) == 0:
-        print("You win")
-        sys.exit()
+        forWin("You Win")
+        return 0
+        # print("You win")
+        # sys.exit()
 
     my_list = list()
     maxim = -1
@@ -360,11 +376,7 @@ def moveHard():
             next_ngh = ngh
 
 
-    # print(mouse_position)
-
     mouse_position = next_ngh
-
-    # print(my_list)
 
     canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0], hexagon[2][1],
                           hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0], hexagon[5][1],
@@ -393,7 +405,17 @@ board = Tk()
 
 board.title("TRAP THE MOUSE")
 
-board.geometry("1120x850")
+width = 1120  # Width
+height = 850  # Height
+
+screen_width = board.winfo_screenwidth()  # Width of the screen
+screen_height = board.winfo_screenheight()  # Height of the screen
+
+# Calculate Starting X and Y coordinates for Window
+x = (screen_width / 2) - (width / 2)
+y = (screen_height / 2) - (height / 2)
+
+board.geometry('%dx%d+%d+%d' % (width, height, x, y))
 
 canvas = Canvas(board, width=1120, height=850, bg="saddlebrown")
 
@@ -413,7 +435,7 @@ medium_rnd_go = random.randrange(0, 2)
 
 testDifficulty()
 
-print(difficulty)
+# print(difficulty)
 
 for line in range(0, 6):
     for row in range(0, 11):
@@ -443,6 +465,6 @@ mouse_position = 55
 canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
 
 defineTraps()
-print(myNeighbours(83))
+# print(myNeighbours(83))
 
 board.mainloop()
