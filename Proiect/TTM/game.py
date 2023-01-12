@@ -1,3 +1,4 @@
+import sys
 from tkinter import *
 from PIL import Image, ImageTk
 
@@ -29,7 +30,8 @@ def verifyHexagon(x, y, hexagon):
 
 def pressButton(event):
     global mouse_position
-    for index in range (0, len(coord)):
+    global you_lose
+    for index in range(0, len(coord)):
         hexagon = coord[index]
         if verifyHexagon(event.x, event.y, hexagon) == 1 and mouse_position != index and hexagon[-1] != "capcana":
             coord[index][-1] = "capcana"
@@ -37,7 +39,16 @@ def pressButton(event):
             canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0], hexagon[2][1],
                                   hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0], hexagon[5][1],
                                   fill="crimson", outline="darkviolet")
+
             moveMouse()
+            ngh1 = myNeighbours(mouse_position)
+
+            if you_lose == 1:
+                print("You lost")
+                sys.exit()
+
+            if len(ngh1) != 6:
+                you_lose = 1
 
 
 def coordError(x1, x2):
@@ -108,10 +119,14 @@ def moveMouse():
     global mouse_position
     hexagon = coord[mouse_position]
     neighbours = myNeighboursValid(mouse_position)
+    if len(neighbours) == 0:
+        print("You win")
+        sys.exit()
     canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0], hexagon[2][1],
                           hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0], hexagon[5][1],
                           fill="darkorange", outline="darkviolet")
     # return neighbours[3]
+
     mouse_position = neighbours[0]
     canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
 
@@ -129,6 +144,8 @@ canvas.bind("<Button-1>", pressButton)
 canvas.pack(padx=10, pady=10) # deseneaza pe board
 
 coord = list()
+
+you_lose = 0
 
 for line in range(0, 6):
     for row in range(0, 11):
