@@ -50,24 +50,67 @@ def verifyHexagon(x, y, hexagon):
 def pressButton(event):
     global mouse_position
     global you_lose
-    for index in range(0, len(coord)):
-        hexagon = coord[index]
-        if verifyHexagon(event.x, event.y, hexagon) == 1 and mouse_position != index and hexagon[-1] != "capcana":
-            coord[index][-1] = "capcana"
-            print(index)
-            canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0], hexagon[2][1],
-                                  hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0], hexagon[5][1],
-                                  fill="crimson", outline="darkviolet")
+    global nr_player
+    if difficulty != "player":
+        for index in range(0, len(coord)):
+            hexagon = coord[index]
+            if verifyHexagon(event.x, event.y, hexagon) == 1 and mouse_position != index and hexagon[-1] != "capcana":
+                coord[index][-1] = "capcana"
+                canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0],
+                                      hexagon[2][1],
+                                      hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0],
+                                      hexagon[5][1],
+                                      fill="crimson", outline="darkviolet")
+                print(index)
+                moveMouse()
+                ngh1 = myNeighbours(mouse_position)
 
-            moveMouse()
-            ngh1 = myNeighbours(mouse_position)
+                if you_lose == 1:
+                    print("You lost")
+                    sys.exit()
 
-            if you_lose == 1:
-                print("You lost")
-                sys.exit()
+                if len(ngh1) != 6:
+                    you_lose = 1
+    else:
+        if nr_player == 0:
+            for index in range(0, len(coord)):
+                hexagon = coord[index]
+                if verifyHexagon(event.x, event.y, hexagon) == 1 and mouse_position != index and hexagon[
+                    -1] != "capcana":
+                    coord[index][-1] = "capcana"
+                    canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0],
+                                          hexagon[2][1],
+                                          hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0],
+                                          hexagon[5][1],
+                                          fill="crimson", outline="darkviolet")
+                    print(index)
+                    # moveMouse()
+                    nr_player = 1
+                    ngh1 = myNeighbours(mouse_position)
 
-            if len(ngh1) != 6:
-                you_lose = 1
+                    if you_lose == 1:
+                        print("You lost")
+                        sys.exit()
+
+                    if len(ngh1) != 6:
+                        you_lose = 1
+        else:
+            ngh = myNeighboursValid(mouse_position)
+
+            for index in range(0, len(ngh)):
+                hexagon = coord[index]
+                hexagon_mouse = coord[mouse_position]
+
+                if verifyHexagon(event.x, event.y, hexagon) == 1 and mouse_position != index:
+                    canvas.create_polygon(hexagon_mouse[0][0], hexagon_mouse[0][1], hexagon_mouse[1][0], hexagon_mouse[1][1], hexagon_mouse[2][0],
+                                          hexagon_mouse[2][1],
+                                          hexagon_mouse[3][0], hexagon_mouse[3][1], hexagon_mouse[4][0], hexagon_mouse[4][1], hexagon_mouse[5][0],
+                                          hexagon_mouse[5][1],
+                                          fill="darkorange", outline="darkviolet")
+                    mouse_position = index
+                    canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW,
+                                image=mouse)
+                    nr_player = 0
 
 
 def coordError(x1, x2):
@@ -191,8 +234,141 @@ def moveMedium():
     canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
 
 
+def minimDistance(position):
+    left = position
+    cnt_left = 0
+
+    while True:
+        all_ngh = myNeighbours(left)
+
+        if len(all_ngh) != 6:
+            break
+
+        ngh = myNeighboursValid(left)
+
+        if left-2 in ngh:
+            cnt_left = cnt_left + 1
+            left = left - 2
+        else:
+            cnt_left = cnt_left + 1
+            left = left - 2
+
+    right = position
+    cnt_right = 0
+
+    while True:
+        all_ngh = myNeighbours(right)
+
+        if len(all_ngh) != 6:
+            break
+
+        ngh = myNeighboursValid(right)
+
+        if right + 2 in ngh:
+            cnt_right = cnt_right + 1
+            right = right + 2
+        else:
+            cnt_right = cnt_right + 1
+            right = right + 2
+
+    up = position
+    cnt_up = 0
+
+    while True:
+        all_ngh = myNeighbours(up)
+
+        if len(all_ngh) != 6 or up < 22:
+            break
+
+        cnt_up = cnt_up + 2
+        up = up - 22
+
+    down = position
+    cnt_down = 0
+
+    while True:
+        all_ngh = myNeighbours(down)
+
+        if len(all_ngh) != 6 or down > 98:
+            break
+
+        cnt_down = cnt_down + 2
+        down = down + 22
+
+    minim = min([cnt_left, cnt_right, cnt_up, cnt_down])
+
+    return minim
+
+
+def isFinal(position , cnt):
+
+    neighbours = myNeighboursValid(position)
+
+    for ngh in neighbours:
+        ngh_ngh = myNeighbours(ngh)
+        if len(ngh_ngh) != 6:
+            return 1
+        if cnt >= 2:
+            break
+        else:
+            valid_ngh = myNeighboursValid(ngh)
+            cnt += 1
+            for n in valid_ngh:
+                if isFinal(n, cnt) == 1:
+                    return 1
+
+    return 0
+
+
 def moveHard():
     global mouse_position
+
+    hexagon = coord[mouse_position]
+
+    neighbours = myNeighboursValid(mouse_position)
+
+    if len(neighbours) == 0:
+        print("You win")
+        sys.exit()
+
+    my_list = list()
+    maxim = -1
+    next_ngh = -1
+    neighbours.reverse()
+    for ngh in neighbours:
+
+        all_neighbours = myNeighbours(ngh)
+        if len(all_neighbours) != 6:
+            next_ngh = ngh
+            break
+        scor = 0
+        ngh_neighbours = myNeighboursValid(ngh)
+        ngh_neighbours.remove(mouse_position)
+
+        scor = len(ngh_neighbours)
+
+        my_list.append((ngh, " ", scor))
+
+        if isFinal(ngh, 0) == 1:
+            next_ngh = ngh
+            scor = 10
+
+        if scor > maxim:
+            maxim = scor
+            next_ngh = ngh
+
+
+    # print(mouse_position)
+
+    mouse_position = next_ngh
+
+    # print(my_list)
+
+    canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0], hexagon[2][1],
+                          hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0], hexagon[5][1],
+                          fill="darkorange", outline="darkviolet")
+
+    canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
 
 
 def moveMouse():
@@ -201,7 +377,7 @@ def moveMouse():
         moveEasy()
     if difficulty == "medium":
         moveMedium()
-    if difficulty == "medium":
+    if difficulty == "hard":
         moveHard()
 
 
@@ -228,6 +404,8 @@ coord = list()
 you_lose = 0
 
 difficulty = "non"
+
+nr_player = 0
 
 medium_rnd_go = random.randrange(0, 2)
 
