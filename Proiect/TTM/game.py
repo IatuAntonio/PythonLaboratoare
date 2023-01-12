@@ -28,7 +28,7 @@ def verifyHexagon(x, y, hexagon):
 
 
 def pressButton(event):
-
+    global mouse_position
     for index in range (0, len(coord)):
         hexagon = coord[index]
         if verifyHexagon(event.x, event.y, hexagon) == 1 and mouse_position != index and hexagon[-1] != "capcana":
@@ -37,6 +37,7 @@ def pressButton(event):
             canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0], hexagon[2][1],
                                   hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0], hexagon[5][1],
                                   fill="crimson", outline="darkviolet")
+            moveMouse()
 
 
 def coordError(x1, x2):
@@ -45,7 +46,18 @@ def coordError(x1, x2):
     return False
 
 
-def my_neighbours(position):
+def myNeighboursValid(position):
+    neighbours = myNeighbours(position)
+    valid_neighbours = list()
+
+    for ngh in neighbours:
+        if coord[ngh][-1] == "normal":
+            valid_neighbours.append(ngh)
+
+    return valid_neighbours
+
+
+def myNeighbours(position):
     mouse_x0 = coord[position][0][0]
     mouse_y0 = coord[position][0][1]
 
@@ -92,6 +104,18 @@ def my_neighbours(position):
     return neighbours
 
 
+def moveMouse():
+    global mouse_position
+    hexagon = coord[mouse_position]
+    neighbours = myNeighboursValid(mouse_position)
+    canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0], hexagon[2][1],
+                          hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0], hexagon[5][1],
+                          fill="darkorange", outline="darkviolet")
+    # return neighbours[3]
+    mouse_position = neighbours[0]
+    canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
+
+
 board = Tk()
 
 board.title("TRAP THE MOUSE")
@@ -132,8 +156,5 @@ mouse = ImageTk.PhotoImage(Image.open("mrsmouse.png"))
 mouse_position = 55
 
 canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
-
-print(my_neighbours(mouse_position))
-
 
 board.mainloop()
