@@ -28,12 +28,12 @@ def verifyHexagon(x, y, hexagon):
 
 
 def pressButton(event):
-    print("m-ai apasat la ", event.x, event.y)
+    
     for index in range (0, len(coord)):
         hexagon = coord[index]
-        if verifyHexagon(event.x, event.y, hexagon) == 1:
-            print("m-ai apasat la cuc")
+        if verifyHexagon(event.x, event.y, hexagon) == 1 and mouse_position != index and hexagon[-1] != "capcana":
             coord[index][-1] = "capcana"
+            print(index)
             canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0], hexagon[2][1],
                                   hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0], hexagon[5][1],
                                   fill="crimson", outline="darkviolet")
@@ -50,8 +50,6 @@ canvas = Canvas(board, width=1280, height=850, bg="lightseagreen")
 canvas.bind("<Button-1>", pressButton)
 
 canvas.pack(padx=10, pady=10) # deseneaza pe board
-
-# canvas.create_polygon(67, 13, 110, 35, 110, 78, 67, 100, 23, 78, 23, 35, fill="darkorange", outline="darkviolet")
 
 coord = list()
 
@@ -76,7 +74,11 @@ for line in range(0, 6):
                          [157 + (row * 91), 147 + (line * 134)], [112 + (row * 91), 170 + (line * 134)],
                          [67 + (row * 91), 147 + (line * 134)], [67 + (row * 91), 103 + (line * 134)], "normal"])
 
+mouse = ImageTk.PhotoImage(Image.open("mrsmouse.png"))
 
+mouse_position = 55
+
+canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
 
 
 board.mainloop()
