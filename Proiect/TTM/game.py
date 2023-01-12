@@ -28,7 +28,7 @@ def verifyHexagon(x, y, hexagon):
 
 
 def pressButton(event):
-    
+
     for index in range (0, len(coord)):
         hexagon = coord[index]
         if verifyHexagon(event.x, event.y, hexagon) == 1 and mouse_position != index and hexagon[-1] != "capcana":
@@ -39,13 +39,66 @@ def pressButton(event):
                                   fill="crimson", outline="darkviolet")
 
 
+def coordError(x1, x2):
+    if x1 == x2 + 1 or x1 == x2 - 1 or x1 == x2:
+        return True
+    return False
+
+
+def my_neighbours(position):
+    mouse_x0 = coord[position][0][0]
+    mouse_y0 = coord[position][0][1]
+
+    mouse_x2 = coord[position][2][0]
+    mouse_y2 = coord[position][2][1]
+
+    mouse_x4 = coord[position][4][0]
+    mouse_y4 = coord[position][4][1]
+
+    neighbours = list()
+
+    for index in range(0, len(coord)):
+        hexagon = coord[index]
+
+        hexagonx2 = hexagon[2][0]
+        hexagony2 = hexagon[2][1]
+
+        hexagonx0 = hexagon[0][0]
+        hexagony0 = hexagon[0][1]
+
+        hexagonx4 = hexagon[4][0]
+        hexagony4 = hexagon[4][1]
+
+        if coordError(hexagonx2, mouse_x4) and coordError(hexagony2, mouse_y4):
+            neighbours.append(index)
+
+        if coordError(hexagonx0, mouse_x4) and coordError(hexagony0, mouse_y4):
+            neighbours.append(index)
+
+        if coordError(hexagonx0, mouse_x2) and coordError(hexagony0, mouse_y2):
+            neighbours.append(index)
+
+        if coordError(hexagonx4, mouse_x2) and coordError(hexagony4, mouse_y2):
+            neighbours.append(index)
+
+        if coordError(hexagonx2, mouse_x0) and coordError(hexagony2, mouse_y0):
+            neighbours.append(index)
+
+        if coordError(hexagonx4, mouse_x0) and coordError(hexagony4, mouse_y0):
+            neighbours.append(index)
+
+
+
+    return neighbours
+
+
 board = Tk()
 
 board.title("TRAP THE MOUSE")
 
-board.geometry("1280x850")
+board.geometry("1120x850")
 
-canvas = Canvas(board, width=1280, height=850, bg="lightseagreen")
+canvas = Canvas(board, width=1120, height=850, bg="lightseagreen")
 
 canvas.bind("<Button-1>", pressButton)
 
@@ -79,6 +132,8 @@ mouse = ImageTk.PhotoImage(Image.open("mrsmouse.png"))
 mouse_position = 55
 
 canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
+
+print(my_neighbours(mouse_position))
 
 
 board.mainloop()
