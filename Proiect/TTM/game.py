@@ -1,8 +1,28 @@
 import sys
 from tkinter import *
 from PIL import Image, ImageTk
+import random
 
-# aria triunghi
+
+def defineTraps():
+    global mouse_position
+    my_list = list(range(4, 9))
+    random.seed()
+    rnd = random.randrange(len(my_list))
+
+    for i in range(0, my_list[rnd]):
+        rnd_hex = random.randrange(120)
+        if rnd_hex == mouse_position:
+            rnd_hex = random.randrange(120)
+        hexagon = coord[rnd_hex]
+        canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0], hexagon[2][1],
+                              hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0], hexagon[5][1],
+                              fill="crimson", outline="darkviolet")
+
+        coord[rnd_hex][-1] = "capcana"
+
+
+
 def trArea(x1, y1, x2, y2, x3, y3):
     return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0)
 
@@ -173,5 +193,7 @@ mouse = ImageTk.PhotoImage(Image.open("mrsmouse.png"))
 mouse_position = 55
 
 canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
+
+defineTraps()
 
 board.mainloop()
