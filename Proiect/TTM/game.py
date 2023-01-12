@@ -22,7 +22,6 @@ def defineTraps():
         coord[rnd_hex][-1] = "capcana"
 
 
-
 def trArea(x1, y1, x2, y2, x3, y3):
     return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0)
 
@@ -135,20 +134,81 @@ def myNeighbours(position):
     return neighbours
 
 
-def moveMouse():
+def moveEasy():
     global mouse_position
     hexagon = coord[mouse_position]
     neighbours = myNeighboursValid(mouse_position)
+
     if len(neighbours) == 0:
         print("You win")
         sys.exit()
+
     canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0], hexagon[2][1],
                           hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0], hexagon[5][1],
                           fill="darkorange", outline="darkviolet")
-    # return neighbours[3]
 
-    mouse_position = neighbours[0]
+    rnd = random.randrange(len(neighbours))
+    mouse_position = neighbours[rnd]
     canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
+
+
+def moveMedium():
+    global mouse_position
+    global medium_rnd_go
+    hexagon = coord[mouse_position]
+
+    neighbours = myNeighboursValid(mouse_position)
+
+    if len(neighbours) == 0:
+        print("You win")
+        sys.exit()
+
+    if medium_rnd_go == 0:
+
+        if mouse_position-2 in neighbours:
+            mouse_position = mouse_position - 2
+        else:
+            rnd_rnd = random.randrange(0, 2)
+            if len(neighbours) == 1:
+                mouse_position = neighbours[0]
+            else:
+                mouse_position = neighbours[rnd_rnd]
+    else:
+
+        if mouse_position + 2 in neighbours:
+            mouse_position = mouse_position + 2
+        else:
+            rnd_rnd = random.randrange(1, 3)
+            if len(neighbours) == 1:
+                mouse_position = neighbours[0]
+            else:
+                mouse_position = neighbours[rnd_rnd * (-1)]
+
+    canvas.create_polygon(hexagon[0][0], hexagon[0][1], hexagon[1][0], hexagon[1][1], hexagon[2][0], hexagon[2][1],
+                          hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0], hexagon[5][1],
+                          fill="darkorange", outline="darkviolet")
+
+    canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
+
+
+def moveHard():
+    global mouse_position
+
+
+def moveMouse():
+
+    if difficulty == "easy":
+        moveEasy()
+    if difficulty == "medium":
+        moveMedium()
+    if difficulty == "medium":
+        moveHard()
+
+
+def testDifficulty():
+    global difficulty
+    file = open("dificulate.txt", "r")
+    difficulty = file.read()
 
 
 board = Tk()
@@ -166,6 +226,14 @@ canvas.pack(padx=10, pady=10) # deseneaza pe board
 coord = list()
 
 you_lose = 0
+
+difficulty = "non"
+
+medium_rnd_go = random.randrange(0, 2)
+
+testDifficulty()
+
+print(difficulty)
 
 for line in range(0, 6):
     for row in range(0, 11):
@@ -195,5 +263,6 @@ mouse_position = 55
 canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
 
 defineTraps()
+print(myNeighbours(83))
 
 board.mainloop()
