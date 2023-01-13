@@ -306,7 +306,8 @@ def moveMedium():
     va deplasa la stanga sau la dreapta. In cazul in care vecinul din dreapta/stanga este un hexagon normal ne vom muta
     pe el (testam hexagonul la distanta de 2 fata de noi deoarece pe linii hexagoanele sunt ori pare ori impare vecinii
     lui 45 spre exemplu fiind 43 si 47), insa, daca vecinul respectiv este o capcana vom alege sa mergem random pe unul
-    dintre primii doi vecini.
+    dintre primii doi vecini. In cazul in care soarecele nu mai are niciun vecin valid inseamna ca nu mai are unda sa se
+     duca, deci, prin urmare userul va castiga.
 
     :return: In cazul in care userul castiga functia va returna 0
     """
@@ -348,74 +349,84 @@ def moveMedium():
     canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
 
 
-def minimDistance(position):
-    left = position
-    cnt_left = 0
+# def minimDistance(position):
+#     left = position
+#     cnt_left = 0
+#
+#     while True:
+#         all_ngh = myNeighbours(left)
+#
+#         if len(all_ngh) != 6:
+#             break
+#
+#         ngh = myNeighboursValid(left)
+#
+#         if left-2 in ngh:
+#             cnt_left = cnt_left + 1
+#             left = left - 2
+#         else:
+#             cnt_left = cnt_left + 1
+#             left = left - 2
+#
+#     right = position
+#     cnt_right = 0
+#
+#     while True:
+#         all_ngh = myNeighbours(right)
+#
+#         if len(all_ngh) != 6:
+#             break
+#
+#         ngh = myNeighboursValid(right)
+#
+#         if right + 2 in ngh:
+#             cnt_right = cnt_right + 1
+#             right = right + 2
+#         else:
+#             cnt_right = cnt_right + 1
+#             right = right + 2
+#
+#     up = position
+#     cnt_up = 0
+#
+#     while True:
+#         all_ngh = myNeighbours(up)
+#
+#         if len(all_ngh) != 6 or up < 22:
+#             break
+#
+#         cnt_up = cnt_up + 2
+#         up = up - 22
+#
+#     down = position
+#     cnt_down = 0
+#
+#     while True:
+#         all_ngh = myNeighbours(down)
+#
+#         if len(all_ngh) != 6 or down > 98:
+#             break
+#
+#         cnt_down = cnt_down + 2
+#         down = down + 22
+#
+#     minim = min([cnt_left, cnt_right, cnt_up, cnt_down])
+#
+#     return minim
 
-    while True:
-        all_ngh = myNeighbours(left)
 
-        if len(all_ngh) != 6:
-            break
+def isFinal(position, cnt):
+    """Testam daca vreun vecin din imprejurimi poate sa ofere victorie soarecelui
 
-        ngh = myNeighboursValid(left)
+    Vom lua initial vecinii valizi ai hexagonului curent. Voi parcurge vecinii acestuia si voi verifica daca este vreunul
+    care sa care ii permite soarecelui sa scape. Daca inca vom fi in recursie vom apela functia pentru vecinii vecinului
+    actual (practic testez daca in jurul pozitiei curente este vreun hexagon la distanta de 3-4 blocuri care ii poate
+    permite evadarea soarecelui)
 
-        if left-2 in ngh:
-            cnt_left = cnt_left + 1
-            left = left - 2
-        else:
-            cnt_left = cnt_left + 1
-            left = left - 2
-
-    right = position
-    cnt_right = 0
-
-    while True:
-        all_ngh = myNeighbours(right)
-
-        if len(all_ngh) != 6:
-            break
-
-        ngh = myNeighboursValid(right)
-
-        if right + 2 in ngh:
-            cnt_right = cnt_right + 1
-            right = right + 2
-        else:
-            cnt_right = cnt_right + 1
-            right = right + 2
-
-    up = position
-    cnt_up = 0
-
-    while True:
-        all_ngh = myNeighbours(up)
-
-        if len(all_ngh) != 6 or up < 22:
-            break
-
-        cnt_up = cnt_up + 2
-        up = up - 22
-
-    down = position
-    cnt_down = 0
-
-    while True:
-        all_ngh = myNeighbours(down)
-
-        if len(all_ngh) != 6 or down > 98:
-            break
-
-        cnt_down = cnt_down + 2
-        down = down + 22
-
-    minim = min([cnt_left, cnt_right, cnt_up, cnt_down])
-
-    return minim
-
-
-def isFinal(position , cnt):
-
+    :param position: pozitia hexagonului pentru care dorim sa aflam vecinii
+    :param cnt: numarul recursiilor facute de funtie
+    :return: 1 - in cazul in care gasim o cale spre iesire, 0 - nu are rost sa mergem in directia respectiva
+    """
     neighbours = myNeighboursValid(position)
 
     for ngh in neighbours:
@@ -435,6 +446,17 @@ def isFinal(position , cnt):
 
 
 def moveHard():
+    """Mutam pe vecinul care are scor mai mare
+
+    Calculam vecinii valizi ai pozitiei actuale si ii parcurgem. Vom calcula apoi pentru fiecare vecin cati vecini are
+    in total. In cazul in care unul dintre vecinii nostri nu are 6 vecini inseamna ca el asigura o cale de iesire (soarecele
+    castiga jocul). Daca conditia precizata anterior nu este indeplinita vom numara cati vecini valizi are vecinul pozitiei
+    curente. In cazul in care functia isFinal arata ca unul dintre vecinii nostrii are un vecin indepartat ce asigura o
+    cale de iesire ii vom creste numarul scorul pentru a fi siguri ca il vom alege. Dupa calcularea scorului se va face un
+    maxim dintre aceste acestea alegandu-se vecinul cu scorul mai mare.
+
+    :return: 0 - atunci cand userul castiga jocul
+    """
     global mouse_position
 
     hexagon = coord[mouse_position]
@@ -444,35 +466,28 @@ def moveHard():
     if len(neighbours) == 0:
         forWin("You Win")
         return 0
-        # print("You win")
-        # sys.exit()
 
     my_list = list()
     maxim = -1
     next_ngh = -1
     neighbours.reverse()
     for ngh in neighbours:
-
         all_neighbours = myNeighbours(ngh)
         if len(all_neighbours) != 6:
             next_ngh = ngh
             break
-        scor = 0
         ngh_neighbours = myNeighboursValid(ngh)
         ngh_neighbours.remove(mouse_position)
 
-        scor = len(ngh_neighbours)
-
-        my_list.append((ngh, " ", scor))
+        score = len(ngh_neighbours)
 
         if isFinal(ngh, 0) == 1:
             next_ngh = ngh
-            scor = 10
+            score += 10
 
-        if scor > maxim:
-            maxim = scor
+        if score > maxim:
+            maxim = score
             next_ngh = ngh
-
 
     mouse_position = next_ngh
 
@@ -484,7 +499,10 @@ def moveHard():
 
 
 def moveMouse():
+    """Atribuim modalitatilor de joc functiile specifice
 
+    :return:
+    """
     if difficulty == "easy":
         moveEasy()
     if difficulty == "medium":
@@ -494,9 +512,22 @@ def moveMouse():
 
 
 def testDifficulty():
+    """Verificam fisierul dificulate.txt pentru a vedea dificultatea aleasa de jucator
+
+    :return:
+    """
     global difficulty
     file = open("dificulate.txt", "r")
     difficulty = file.read()
+
+
+'''
+Creem board-ul si il pozitionam in centrul ecranului.
+Vom crea canvasul de lucru si vom atribui butonului1 (click stanga) functia de pressButton.
+Vom initializa lista coord ce va contine coordonatele hexagoanelor precum si variabila difficulty cu continutul fisierului
+Vom alege random directia de mers pentru modul medium si initializam variabila nr_player.
+Vom popula coord cu coordonatele necesare, vom introduce soarecele si vom adauga capcanele initiale
+'''
 
 
 board = Tk()
