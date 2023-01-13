@@ -548,7 +548,7 @@ canvas = Canvas(board, width=1120, height=850, bg="saddlebrown")
 
 canvas.bind("<Button-1>", pressButton)
 
-canvas.pack(padx=10, pady=10) # deseneaza pe board
+canvas.pack(padx=10, pady=10)
 
 coord = list()
 
@@ -561,8 +561,6 @@ nr_player = 0
 medium_rnd_go = random.randrange(0, 2)
 
 testDifficulty()
-
-# print(difficulty)
 
 for line in range(0, 6):
     for row in range(0, 11):
@@ -592,6 +590,5 @@ mouse_position = 55
 canvas.create_image(coord[mouse_position][5][0] + 18, coord[mouse_position][5][1] - 3, anchor=NW, image=mouse)
 
 defineTraps()
-# print(myNeighbours(83))
 
 board.mainloop()
