@@ -26,11 +26,13 @@ def forWin(text):
 
 def defineTraps():
     """Definesc unde vor fi plasate capcanele de la inceputul jocului
+
     In my_list avem numaru de capcane afisate la deschiderea jocului. Cu ajutorul lui rnd vom alege o valoare aleatorie
      din lista pentru a da mereu un numar diferit de capcane. In for vom alege un hexagon (diferit de pozitia initiala
      a soarecelui) pe care il vom colora in culoarea crimson aratand astfel faptul ca este o capcana. La final in vectorul
      coord care contine coordonatele tuturor hexagoanelor vom preciza ca hexagonul nu mai este normal ci a devenit o
      capcana
+
     :return:
     """
     global mouse_position
@@ -112,11 +114,11 @@ def pressButton(event):
     Pentru modurile de joc easy, medium si hard functia are acelasi comportament: parcurg toate hexagoanele si testez pentru
     fiecare daca a fost cumva apasat. In cazul in care hexagonul a fost apasat si acesta este unul normal si este diferit de pozitia
     curenta a soarecelui atunci il voi transforma intr-o capcana, schimbandu-i culoarea si tipul. Totodata aceasta functie
-    este cea care anunta daca jucatorul a pierdut acest lucru realizandu-se cand pozitia in care se afla soarecele nu mai
+    este cea care anunta daca jucatorul a pierdut, acest lucru realizandu-se cand pozitia in care se afla soarecele nu mai
     are 6 vecini.
-    Pentru modul de player vs player se va realiza relatic la fel doar ca se vor lua doua cazuri pe baza variabilei nr_player.
+    Pentru modul de player vs player se va realiza relativ la fel doar ca se vor lua doua cazuri pe baza variabilei nr_player.
     Pentru valoarea 0 va muta playerul ca in mod normal ca si la celelalte moduri, iar pentru valoarea 1 in loc sa adaugam
-    o capcana vom muta soarecele pe o pozitie vecina valabila
+    o capcana vom muta soarecele pe o pozitie vecina valabila.
 
     :param event: Paramentrul din care se iau coordonatele punctului care a fost apasat
     :return:
@@ -154,15 +156,12 @@ def pressButton(event):
                                           hexagon[3][0], hexagon[3][1], hexagon[4][0], hexagon[4][1], hexagon[5][0],
                                           hexagon[5][1],
                                           fill="crimson", outline="darkviolet")
-                    # print(index)
-                    # moveMouse()
                     nr_player = 1
                     ngh1 = myNeighboursValid(mouse_position)
 
                     if len(ngh1) == 0:
                         forWin("Player Win")
-                        # print("PLAYER WIN")
-                        # sys.exit()
+
         else:
             ngh = myNeighboursValid(mouse_position)
 
@@ -221,10 +220,10 @@ def myNeighboursValid(position):
 def myNeighbours(position):
     """Calculam vecinii hexagonului curent
 
-    Pe baza celor 3 colcuti precizate mai jos (0, 2, 4) vom putea calcula care sunt hexagoanele vecine cu pozitia curenta.
+    Pe baza celor 3 colturi precizate mai jos (0, 2, 4) vom putea calcula care sunt hexagoanele vecine cu pozitia curenta.
     Vom lua initial coordonatele celor 3 colturi, apoi vom parcurge toate hexagoanele testand daca colturile 0, 2, 4
     sunt aceleasi (cu marja de eroare) cu ale hexagonului initial. In cazul in care sunt indeplinite conditiile hexagonul
-    respectiv va fi introdus in lista de vecini
+    respectiv va fi introdus in lista de vecini.
 
     :param position: pozitia pe care se afla soarece in momentul actual
     :return: o lista cu toti vecinii
@@ -306,7 +305,7 @@ def moveMedium():
     va deplasa la stanga sau la dreapta. In cazul in care vecinul din dreapta/stanga este un hexagon normal ne vom muta
     pe el (testam hexagonul la distanta de 2 fata de noi deoarece pe linii hexagoanele sunt ori pare ori impare vecinii
     lui 45 spre exemplu fiind 43 si 47), insa, daca vecinul respectiv este o capcana vom alege sa mergem random pe unul
-    dintre primii doi vecini. In cazul in care soarecele nu mai are niciun vecin valid inseamna ca nu mai are unda sa se
+    dintre primii doi vecini. In cazul in care soarecele nu mai are niciun vecin valid inseamna ca nu mai are unde sa se
      duca, deci, prin urmare userul va castiga.
 
     :return: In cazul in care userul castiga functia va returna 0
@@ -526,7 +525,7 @@ Creem board-ul si il pozitionam in centrul ecranului.
 Vom crea canvasul de lucru si vom atribui butonului1 (click stanga) functia de pressButton.
 Vom initializa lista coord ce va contine coordonatele hexagoanelor precum si variabila difficulty cu continutul fisierului
 Vom alege random directia de mers pentru modul medium si initializam variabila nr_player.
-Vom popula coord cu coordonatele necesare, vom introduce soarecele si vom adauga capcanele initiale
+Vom popula coord cu coordonatele necesare, vom introduce soarecele si vom adauga capcanele initiale.
 '''
 
 

@@ -1,8 +1,8 @@
 """
-Main.py este cel care se ocupa cu parea de inceput a jocului. In acest modul se crea primul canvas in care se vor afisa
+Main.py este cel care se ocupa cu partea de inceput a jocului. In acest modul se crea primul canvas in care se vor afisa
 titlul si butoanele. Din acest meniu se poate avansa intr-un nou canvas in care vom regasi cele 4 moduri de joc (Easy,
-Medium, Hard, Player vs Player) sau se poate in inchide jocul prin apasarea butonului de quit. Canvsul care va avea butoanele
-ce permit alegerea modului de joc va lega main.py de game.py permitand astfel ca jocul propriu-zis sa ruleze
+Medium, Hard, Player vs Player) sau se poate in inchide jocul prin apasarea butonului de quit. Canvasul care va avea butoanele
+ce permit alegerea modului de joc va lega main.py de game.py permitand astfel ca jocul propriu-zis sa ruleze.
 """
 
 
@@ -19,8 +19,9 @@ def startGame():
 
 def gameEasy():
     """Modificam modul de joc
+
     Functia va deschide fisierul dificultate.txt pentru a scrie ce dificultate am ales pentru jocul nostru. Acest fisier
-    este partajat cu game.py, acesta verificand cu ajutorul fisierului ce modalitate va folosi (in cazul nostru fiind easy)
+    este partajat cu game.py, verificand cu ajutorul fisierului ce modalitate va folosi (in cazul nostru fiind easy)
     :return:
     """
     file = open("dificulate.txt", "w")
@@ -32,8 +33,9 @@ def gameEasy():
 
 def gameMedium():
     """Modificam modul de joc
+
     Functia va deschide fisierul dificultate.txt pentru a scrie ce dificultate am ales pentru jocul nostru. Acest fisier
-    este partajat cu game.py, acesta verificand cu ajutorul fisierului ce modalitate va folosi (in cazul nostru fiind medium)
+    este partajat cu game.py, verificand cu ajutorul fisierului ce modalitate va folosi (in cazul nostru fiind medium)
     :return:
     """
     file = open("dificulate.txt", "w")
@@ -45,8 +47,9 @@ def gameMedium():
 
 def gameHard():
     """Modificam modul de joc
+
     Functia va deschide fisierul dificultate.txt pentru a scrie ce dificultate am ales pentru jocul nostru. Acest fisier
-    este partajat cu game.py, acesta verificand cu ajutorul fisierului ce modalitate va folosi (in cazul nostru fiind hard)
+    este partajat cu game.py, verificand cu ajutorul fisierului ce modalitate va folosi (in cazul nostru fiind hard)
     :return:
     """
     file = open("dificulate.txt", "w")
@@ -58,8 +61,9 @@ def gameHard():
 
 def gamePlayer():
     """Modificam modul de joc
+
     Functia va deschide fisierul dificultate.txt pentru a scrie ce dificultate am ales pentru jocul nostru. Acest fisier
-    este partajat cu game.py, acesta verificand cu ajutorul fisierului ce modalitate va folosi (in cazul nostru fiind player)
+    este partajat cu game.py, verificand cu ajutorul fisierului ce modalitate va folosi (in cazul nostru fiind player)
     :return:
     """
     file = open("dificulate.txt", "w")
@@ -78,11 +82,11 @@ def quitGame():
 
 
 def goInterface():
-    """Mutam la interfata din care alegem modul de joc
+    """Mutam la interfata in care alegem modul de joc
 
-        Pentru a crea noua interfata vom avea nevoie sa distrugem vechea interfata. Vom face pe urma un nou canvas (choose_game)
+        Pentru a crea noua interfata vom avea nevoie sa o distrugem pe cea veche. Vom face pe urma un nou canvas (choose_game)
         in care vom crea 4 butoane ce vor fi aferente modurilor de joc. Fiecarui buton i se va atribui o functie (din cele ilustrate
-        mai sus) care ii va permite sa deschida jocul in modul in care doreste
+        mai sus) care ii va permite sa deschida jocul in modul in care doreste.
 
     :return:
     """
@@ -106,7 +110,7 @@ def goInterface():
 """
     Mai jos am ilustrat  cum se va creea tabla (board) pe care vom desena canvasul nostru.
     Dupa initializare vom face astfel incat board sa fie afisat in centrul ecranului pentru a fi o experienta mai placuta.
-    Pe urma voi initializa si canvasul pentru a introduce titlul jocului si butoanele din meniul principal
+    Pe urma voi initializa si canvasul pentru a introduce titlul jocului si butoanele din meniul principal.
     
 """
 
